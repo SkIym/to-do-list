@@ -1,8 +1,7 @@
 // control app flow
-import { listRenderer, projectRenderer, taskRenderer } from "./render";
+import { listRenderer } from "./render";
 import TodoList from "./list";
 import Project from "./projects";
-import Task from "./tasks";
 
 export default class App {
   constructor() {

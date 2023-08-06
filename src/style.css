@@ -45,6 +45,17 @@
 
 /* project bench */
 
-/* #task-details {
+.task-item {
+  display: flex;
+
+}
+
+#task-details {
   display: none; 
-} */
+  background-color: blanchedalmond;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+

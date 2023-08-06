@@ -24,7 +24,7 @@ export default class Project {
 
   removeTask(rm) {
     this._tasks = this._tasks.filter((task) => {
-      return tasks !== rm;
+      return task !== rm;
      })
   }
 

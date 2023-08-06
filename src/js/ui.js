@@ -58,14 +58,6 @@ export const userInterface = (() => {
 
       editElmnt.appendChildren(taskDisplay, [tdTag, tdItems]);
 
-    // const taskAddBtn = document.createElement('div');
-    // editElmnt.addId(taskAddBtn, 'add-task-container');
-  
-      // const addBtn_T = document.createElement('button');
-      // editElmnt.addId(addBtn_T, 'add-task')
-      // editElmnt.addText(addBtn_T, 'Add new task');
-      // editElmnt.appendChildren(taskAddBtn, [addBtn_T]);
-
     // hidden task details div
     const taskDetails = document.createElement('div');
     editElmnt.addId(taskDetails, 'task-details');
@@ -82,8 +74,11 @@ export const userInterface = (() => {
       taskNotes.id = 'task-notes';
       const taskChecklist = document.createElement('div');
       taskChecklist.id = 'task-checklist';
+      const doneDetails = document.createElement('button');
+      doneDetails.id = 'done-button-details';
+      doneDetails.textContent = 'Done';
     
-      editElmnt.appendChildren(taskDetails, [taskTitle, taskDescription, taskDueDate, taskPriority, taskNotes, taskChecklist])
+      editElmnt.appendChildren(taskDetails, [taskTitle, taskDescription, taskDueDate, taskPriority, taskNotes, taskChecklist, doneDetails])
   
   editElmnt.appendChildren(projBench, [projName, taskDisplay, taskDetails]);
  

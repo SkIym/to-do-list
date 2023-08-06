@@ -20,13 +20,15 @@ export class listRenderer {
       // Clicking the div element will change project view and render the respective tasks
       projItem.addEventListener('click', () => {
         new projectRenderer(proj).renderTasks();
+        document.getElementById('task-details').style.display = 'none';
+
       });
     }
   }
 }
 
 // render tasks of the project
-export class projectRenderer {
+class projectRenderer {
   constructor(project) {
     this.project = project;
     this.tdItems = document.getElementById('task-items');
@@ -40,10 +42,28 @@ export class projectRenderer {
     // console.log(this.project.tasks)
     for (const task of this.project.tasks) {
       const taskItem = document.createElement('div');
+      editElmnt.addClass(taskItem, ['task-item']);
       taskItem.innerHTML = `
-        <p>${task.title}<p>
-        <p>${task.dueDate}<p>
+        <p>${task.title}</p>
+        <p>${task.dueDate}</p>
       `;
+
+      const editTaskBtn = document.createElement('button');
+      editTaskBtn.addEventListener('click', () => {
+        new taskRenderer(task).renderDetails();
+      });
+      editTaskBtn.textContent = 'Edit';
+      taskItem.appendChild(editTaskBtn);
+
+      const checkTaskBtn = document.createElement('button');
+      checkTaskBtn.addEventListener('click', () => {
+        this.project.removeTask(task);
+        this.renderTasks();
+      });
+      checkTaskBtn.textContent = 'Complete';
+      taskItem.appendChild(checkTaskBtn);
+
+
       editElmnt.appendChildren(this.tdItems, [taskItem])
     }
 
@@ -54,9 +74,7 @@ export class projectRenderer {
       // temp adding funciton
       this.project.addTask(new Task('0','1','2','3','4','5'));
       this.renderTasks();
-      console.log(this.project.tasks)
     });
-
     this.tdItems.appendChild(addTaskBtn);
   }
 }
@@ -64,7 +82,7 @@ export class projectRenderer {
 
 // render details of the tasks
 
-export class taskRenderer {
+class taskRenderer {
   constructor(task) {
     this.task = task;
     this.details = document.getElementById('task-details')
@@ -74,14 +92,20 @@ export class taskRenderer {
     this.notes = document.getElementById('task-notes');
     this.checklist = document.getElementById('task-checklist');
     this.prio = document.getElementById('task-prio');
+    this.done = document.getElementById('done-button-details');
   }
 
   renderDetails() {
+    this.details.style.display = 'flex';
     this.title.textContent = `${this.task.title}`;
     this.desc.textContent = `${this.task.description}`;
     this.dueDate.textContent = `${this.task.dueDate}`;
     this.prio.textContent = `${this.task.priority}`;
     this.notes.textContent = `${this.task.notes}`;
     this.checklist.textContent = `${this.task.checklist}`;
+
+    this.done.onclick = () => {
+      this.details.style.display = 'none';
+    }
   }
 }
