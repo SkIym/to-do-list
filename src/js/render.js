@@ -1,8 +1,77 @@
 import editElmnt from "./editElmnt";
-import Task from "./tasks";
+import TodoList from "./list";
 
-// render projects list
-export class listRenderer {
+// render details of the task
+class taskRenderer {
+  constructor() {
+    this.task = null;
+    this.project = null;
+    this.details = document.getElementById('task-details')
+    this.title = document.getElementById('task-title');
+    this.dueDate = document.getElementById('task-date');
+    this.desc = document.getElementById('task-desc');
+    this.prio = document.getElementById('task-prio');
+  }
+
+  renderDetails(currentTask, currentProject) {
+    this.task = currentTask;
+    this.project = currentProject;
+    this.details.style.display = 'flex';
+    this.title.textContent = `${this.task.title}`;
+    this.desc.textContent = `${this.task.description}`;
+    this.dueDate.textContent = `${this.task.dueDate}`;
+    this.prio.textContent = `${this.task.priority}`;
+  }
+}
+
+export const taskRendererInstance = new taskRenderer();
+
+// render tasks of the project
+class projectRenderer {
+  constructor() {
+    this.tdItems = document.getElementById('task-items');
+    this.name = document.getElementById('project-name');
+    this.project = null;
+  }
+
+  renderTasks(currentProject) {
+    this.project = currentProject;
+    this.tdItems.innerHTML = '';
+    editElmnt.addText(this.name, currentProject.name);
+
+    let task_id = 0;
+    for (const task of currentProject.tasks) {
+      const taskItem = document.createElement('div');
+      editElmnt.addClass(taskItem, ['task-item']);
+      taskItem.innerHTML = `
+        <p>${task.title}</p>
+        <p>${task.dueDate}</p>
+      `;
+
+      // Append an edit button
+      const editTaskBtn = document.createElement('button');
+      editTaskBtn.textContent = 'Edit';
+      editTaskBtn.id = `${task_id}`;
+      editTaskBtn.classList.add('edit-task');
+      taskItem.appendChild(editTaskBtn);
+
+      // Append a complete button
+      const checkTaskBtn = document.createElement('button');
+      checkTaskBtn.textContent = 'Complete';
+      checkTaskBtn.id = `${task_id}`;
+      checkTaskBtn.classList.add('check-task');
+      taskItem.appendChild(checkTaskBtn);
+      
+      this.tdItems.appendChild(taskItem);
+      task_id++;
+    }
+  }
+}
+
+export const projectRendererInstance = new projectRenderer();
+
+// render list of projects
+class listRenderer {
 
   constructor(list) {
     this.list = list;
@@ -11,105 +80,17 @@ export class listRenderer {
 
   renderProjects() {
     this.pdItems.innerHTML = '';
+    let project_id = 0;
     for (const proj of this.list.projects) {
       const projItem = document.createElement('div');
-      editElmnt.addClass(projItem, ['project-item'])
-      editElmnt.addText(projItem, `${proj.name}`);
+      projItem.classList.add('project-item');
+      projItem.textContent = `${proj.name}`;
       editElmnt.appendChildren(this.pdItems, [projItem])
-      
-      // Clicking the div element will change project view and render the respective tasks
-      projItem.addEventListener('click', () => {
-        new projectRenderer(proj).renderTasks();
-        document.getElementById('task-details').style.display = 'none';
-
-      });
+      projItem.id = `${project_id}`;
+      project_id++;
     }
   }
 }
 
-// render tasks of the project
-class projectRenderer {
-  constructor(project) {
-    this.project = project;
-    this.tdItems = document.getElementById('task-items');
-    this.name = document.getElementById('project-name');
-  }
-
-  renderTasks() {
-    this.tdItems.innerHTML = '';
-    editElmnt.addText(this.name, this.project.name);
-
-    for (const task of this.project.tasks) {
-      const taskItem = document.createElement('div');
-      editElmnt.addClass(taskItem, ['task-item']);
-      taskItem.innerHTML = `
-        <p>${task.title}</p>
-        <p>${task.dueDate}</p>
-      `;
-
-      const editTaskBtn = document.createElement('button');
-      editTaskBtn.addEventListener('click', () => {
-        new taskRenderer(task, this.project).renderDetails();
-      });
-      editTaskBtn.textContent = 'Edit';
-      taskItem.appendChild(editTaskBtn);
-
-      const checkTaskBtn = document.createElement('button');
-      checkTaskBtn.addEventListener('click', () => {
-        this.project.removeTask(task);
-        this.renderTasks();
-      });
-      checkTaskBtn.textContent = 'Complete';
-      taskItem.appendChild(checkTaskBtn);
-
-
-      editElmnt.appendChildren(this.tdItems, [taskItem])
-    }
-
-    const addTaskBtn = document.createElement('button');
-    addTaskBtn.id = 'add-task';
-    addTaskBtn.textContent = 'Add new task';
-    addTaskBtn.addEventListener('click', () => {
-      // temp adding funciton
-      this.project.addTask(new Task('title','desc','duedate','priority'));
-      this.renderTasks();
-    });
-    this.tdItems.appendChild(addTaskBtn);
-  }
-}
-
-
-// render details of the tasks
-
-class taskRenderer {
-  constructor(task, project) {
-    this.project = project;
-    this.task = task;
-    this.details = document.getElementById('task-details')
-    this.title = document.getElementById('task-title');
-    this.dueDate = document.getElementById('task-date');
-    this.desc = document.getElementById('task-desc');
-    this.prio = document.getElementById('task-prio');
-    this.done = document.getElementById('done-button-details');
-    this.delete = document.getElementById('delete-task-button');
-  }
-
-  renderDetails() {
-    this.details.style.display = 'flex';
-    this.title.textContent = `${this.task.title}`;
-    this.desc.textContent = `${this.task.description}`;
-    this.dueDate.textContent = `${this.task.dueDate}`;
-    this.prio.textContent = `${this.task.priority}`;
-
-    this.done.onclick = () => {
-      this.details.style.display = 'none';
-    }
-
-    this.delete.onclick = () => {
-      this.details.style.display = 'none';
-      this.project.removeTask(this.task);
-      new projectRenderer(this.project).renderTasks();
-    }
-
-  }
-}
+export const LIST = new TodoList();
+export const listRendererInstance = new listRenderer(LIST);

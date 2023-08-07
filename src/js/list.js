@@ -9,6 +9,10 @@ export default class TodoList {
     return this._projects;
   }
 
+  getProject(id) {
+    return this._projects[id]
+  }
+
   addProject(project) {
     this._projects.push(project);
   }

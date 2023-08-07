@@ -18,6 +18,10 @@ export default class Project {
     return this._tasks
   }
 
+  getTask(id) {
+    return this._tasks[id]
+  }
+
   addTask(task) {
     this._tasks.push(task)
   }
