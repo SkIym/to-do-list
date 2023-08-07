@@ -4,6 +4,7 @@ export const addProjectField = document.getElementById('add-project-input');
 export const addProjectAdd = document.getElementById('add-project-button');
 export const addProjectCancel = document.getElementById('cancel-add-project-button');
 
+
 export function projectItems() {
   return document.querySelectorAll('.project-item');
 }
@@ -17,7 +18,17 @@ export function checkButtons() {
 }
 
 export const addTaskBtn = document.getElementById('add-task');
+export const addTaskForm = document.getElementById('add-task-form');
+export const addTaskAdd = document.getElementById('add-task-add');
+export const addTaskCancel = document.getElementById('add-task-cancel');
+
+export const addTitle = document.getElementById('task-title-input');
+export const addDesc = document.getElementById('task-desc-input');
+export const addDate = document.getElementById('task-date-input');
+export const addPrio = document.getElementById('task-prio-input');
+   
+
+
 export const doneEditBtn = document.getElementById('done-button-details');
 export const deleteTaskBtn = document.getElementById('delete-task-button');
-
 export const taskMoreDetails = document.getElementById('task-details');

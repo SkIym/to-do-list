@@ -1,26 +1,29 @@
 import editElmnt from "./editElmnt";
 import TodoList from "./list";
+import * as domElmnt from './domElmnt';
 
 // render details of the task
 class taskRenderer {
   constructor() {
     this.task = null;
     this.project = null;
-    this.details = document.getElementById('task-details')
-    this.title = document.getElementById('task-title');
-    this.dueDate = document.getElementById('task-date');
-    this.desc = document.getElementById('task-desc');
-    this.prio = document.getElementById('task-prio');
+    this.details = domElmnt.addTaskForm;
+    this.title = domElmnt.addTitle;
+    this.dueDate = domElmnt.addDate;
+    this.desc = domElmnt.addDesc;
+    this.prio = domElmnt.addPrio;
+    this.edit = domElmnt.addTaskAdd;
   }
 
   renderDetails(currentTask, currentProject) {
     this.task = currentTask;
     this.project = currentProject;
     this.details.style.display = 'flex';
-    this.title.textContent = `${this.task.title}`;
-    this.desc.textContent = `${this.task.description}`;
-    this.dueDate.textContent = `${this.task.dueDate}`;
-    this.prio.textContent = `${this.task.priority}`;
+    this.edit.textContent = 'Done';
+    this.title.value = `${this.task.title}`;
+    this.desc.value = `${this.task.description}`;
+    this.dueDate.value = `${this.task.dueDate}`;
+    this.prio.value = `${this.task.priority}`;
   }
 }
 

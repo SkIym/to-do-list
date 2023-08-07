@@ -57,11 +57,8 @@ export const userInterface = (() => {
       cancel.textContent = 'Cancel';
       cancel.id = 'cancel-add-project-button';
 
-
-      editElmnt.appendChildren(actionBtns, [add, cancel])
-
-      editElmnt.appendChildren(projectAddForm, [txtField, actionBtns])
-
+      editElmnt.appendChildren(actionBtns, [add, cancel]);
+      editElmnt.appendChildren(projectAddForm, [txtField, actionBtns]);
 
   editElmnt.appendChildren(overview, [projectDisplay, projectAddBtn, projectAddForm]);
 
@@ -100,10 +97,6 @@ export const userInterface = (() => {
       taskPriority.id = 'task-prio';
       const taskDueDate = document.createElement('div');
       taskDueDate.id = 'task-date';
-      const taskNotes = document.createElement('div');
-      taskNotes.id = 'task-notes';
-      const taskChecklist = document.createElement('div');
-      taskChecklist.id = 'task-checklist';
       const doneDetails = document.createElement('button');
       doneDetails.id = 'done-button-details';
       doneDetails.textContent = 'Done';
@@ -112,9 +105,56 @@ export const userInterface = (() => {
       deteleTask.id = 'delete-task-button';
       deteleTask.textContent = 'Delete';
     
-      editElmnt.appendChildren(taskDetails, [taskTitle, taskDescription, taskDueDate, taskPriority, taskNotes, taskChecklist, doneDetails,deteleTask])
-  
-  editElmnt.appendChildren(projBench, [projName, taskDisplay, addTaskBtn, taskDetails]);
+      editElmnt.appendChildren(taskDetails, [taskTitle, taskDescription, taskDueDate, taskPriority, doneDetails,deteleTask])
+
+    const addTaskForm = document.createElement('div');
+    addTaskForm.id = 'add-task-form';
+    addTaskForm.style.display = 'none';
+
+      const titleInput = document.createElement('input');
+      titleInput.id = 'task-title-input';
+      titleInput.type = 'text';
+
+      const descInput = document.createElement('input');
+      descInput.id = 'task-desc-input';
+      descInput.type = 'text';
+
+      const dueDateInput = document.createElement('input');
+      dueDateInput.id = 'task-date-input';
+      dueDateInput.type = 'date';
+
+      const priorityInput = document.createElement('select');
+      priorityInput.id = 'task-prio-input';
+
+        const high = document.createElement('option');
+        high.textContent = 'High';
+        high.value = 3;
+
+        const mid = document.createElement('option');
+        mid.textContent = 'Mid';
+        mid.value = 2;
+
+        const low = document.createElement('option');
+        low.textContent = 'Low';
+        low.value = 1;
+    
+        editElmnt.appendChildren(priorityInput, [high, mid, low])
+
+      const addTaskActions = document.createElement('div')
+      
+        const addTaskAdd = document.createElement('button');
+        addTaskAdd.id = 'add-task-add'
+        addTaskAdd.textContent = 'Add';
+
+        const addTaskCancel = document.createElement('button');
+        addTaskCancel.id = 'add-task-cancel'
+        addTaskCancel.textContent = 'Cancel';
+
+        editElmnt.appendChildren(addTaskActions, [addTaskAdd, addTaskCancel]);
+
+      editElmnt.appendChildren(addTaskForm, [titleInput, descInput, dueDateInput, priorityInput, addTaskActions]);
+
+  editElmnt.appendChildren(projBench, [projName, taskDisplay, addTaskBtn, taskDetails, addTaskForm]);
  
   // add to DOM
   editElmnt.appendChildren(appGrid, [header, overview, projBench]);
