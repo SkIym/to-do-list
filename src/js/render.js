@@ -39,7 +39,6 @@ class projectRenderer {
     this.tdItems.innerHTML = '';
     editElmnt.addText(this.name, this.project.name);
 
-    // console.log(this.project.tasks)
     for (const task of this.project.tasks) {
       const taskItem = document.createElement('div');
       editElmnt.addClass(taskItem, ['task-item']);
@@ -50,7 +49,7 @@ class projectRenderer {
 
       const editTaskBtn = document.createElement('button');
       editTaskBtn.addEventListener('click', () => {
-        new taskRenderer(task).renderDetails();
+        new taskRenderer(task, this.project).renderDetails();
       });
       editTaskBtn.textContent = 'Edit';
       taskItem.appendChild(editTaskBtn);
@@ -68,11 +67,11 @@ class projectRenderer {
     }
 
     const addTaskBtn = document.createElement('button');
-    editElmnt.addId(addTaskBtn, 'add-task')
-    editElmnt.addText(addTaskBtn, 'Add new task');
+    addTaskBtn.id = 'add-task';
+    addTaskBtn.textContent = 'Add new task';
     addTaskBtn.addEventListener('click', () => {
       // temp adding funciton
-      this.project.addTask(new Task('0','1','2','3','4','5'));
+      this.project.addTask(new Task('title','desc','duedate','priority'));
       this.renderTasks();
     });
     this.tdItems.appendChild(addTaskBtn);
@@ -83,16 +82,16 @@ class projectRenderer {
 // render details of the tasks
 
 class taskRenderer {
-  constructor(task) {
+  constructor(task, project) {
+    this.project = project;
     this.task = task;
     this.details = document.getElementById('task-details')
     this.title = document.getElementById('task-title');
     this.dueDate = document.getElementById('task-date');
     this.desc = document.getElementById('task-desc');
-    this.notes = document.getElementById('task-notes');
-    this.checklist = document.getElementById('task-checklist');
     this.prio = document.getElementById('task-prio');
     this.done = document.getElementById('done-button-details');
+    this.delete = document.getElementById('delete-task-button');
   }
 
   renderDetails() {
@@ -101,11 +100,16 @@ class taskRenderer {
     this.desc.textContent = `${this.task.description}`;
     this.dueDate.textContent = `${this.task.dueDate}`;
     this.prio.textContent = `${this.task.priority}`;
-    this.notes.textContent = `${this.task.notes}`;
-    this.checklist.textContent = `${this.task.checklist}`;
 
     this.done.onclick = () => {
       this.details.style.display = 'none';
     }
+
+    this.delete.onclick = () => {
+      this.details.style.display = 'none';
+      this.project.removeTask(this.task);
+      new projectRenderer(this.project).renderTasks();
+    }
+
   }
 }

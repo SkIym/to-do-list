@@ -1,13 +1,11 @@
 // todo-items
 
 export default class Task {
-  constructor(title, description, dueDate, priority, notes, checklist) {
+  constructor(title, description, dueDate, priority) {
     this._title = title;
     this._description = description;
     this._dueDate = dueDate;
     this._priority = priority;
-    this._notes = notes;
-    this._checklist = checklist;
   }
 
   get title() {
@@ -40,22 +38,6 @@ export default class Task {
 
   set priority(priority) {
     this._priority = priority;
-  }
-
-  get notes() {
-    return this._notes;
-  }
-
-  set notes(notes) {
-    this._notes = notes;
-  }
-
-  get checklist() {
-    return this._checklist;
-  }
-
-  set checklist(checklist) {
-    this._checklist = checklist;
   }
 
 }

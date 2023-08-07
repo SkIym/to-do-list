@@ -1,7 +1,7 @@
 // aggregate all modules here
 import '../style.css';
-import { userInterface, projectForm} from './ui.js';
+import { userInterface } from './domCnstr';
 import App from './app.js'
 
 const todolist = new App();
-todolist.render();
+todolist.renderList();

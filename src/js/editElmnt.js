@@ -24,10 +24,13 @@ export default class editElmnt {
 
   }
 
-  static addEvent = (element, evt, fnc) => {
-
-    element.addEventListener(evt, fnc)
-
+  static toggleToFlex(element) {
+    element.style.display = (element.style.display == 'none') ? 'flex': 'none';
   }
+
+  static toggleToBlock(element) {
+    element.style.display = (element.style.display == 'none') ? 'block': 'none';
+  }
+
 }
   

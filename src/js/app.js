@@ -2,6 +2,8 @@
 import { listRenderer } from "./render";
 import TodoList from "./list";
 import Project from "./projects";
+import * as domElmnt from './domElmnt';
+import editElmnt from "./editElmnt";
 
 export default class App {
   constructor() {
@@ -17,16 +19,30 @@ export default class App {
 
   // add event listeners to buttons
   addEvents() {
-    const addProjectBtn = document.getElementById('add-project');
-    addProjectBtn.addEventListener('click', () => {
-      // temp adding function
-      this.list.addProject(new Project(prompt('Name?')))
-      this.render();
+    domElmnt.addProjectBtn.addEventListener('click', () => {
+      this.refreshList();
     });
+
+    domElmnt.addProjectCancel.addEventListener('click', () => {
+      this.refreshList();
+    })
+
+    domElmnt.addProjectAdd.addEventListener('click', () => {
+      this.list.addProject(new Project(`${domElmnt.addProjectField.value}`))
+      domElmnt.addProjectField.value = '';
+      this.refreshList();
+    })
+
   }
 
-  render() {
+  renderList() {
     this.listRenderer.renderProjects(); 
+  }
+
+  refreshList() {
+    this.renderList();
+    editElmnt.toggleToFlex(domElmnt.addProjectForm);
+    editElmnt.toggleToFlex(domElmnt.addProjectBtn);
   }
 
 }

@@ -37,7 +37,33 @@ export const userInterface = (() => {
       editElmnt.addText(addBtn, 'Add new project');
       editElmnt.appendChildren(projectAddBtn, [addBtn]);
 
-  editElmnt.appendChildren(overview, [projectDisplay, projectAddBtn]);
+    const projectAddForm = document.createElement('div');
+    projectAddForm.id = 'add-project-form';
+    projectAddForm.style.display ='none';
+
+      const txtField = document.createElement('input');
+      txtField.type = 'text';
+      txtField.id = 'add-project-input';
+      txtField.pattern = '[A-Za-z]+';
+
+      const actionBtns = document.createElement('div');
+      actionBtns.id = 'project-add-buttons'
+
+      const add = document.createElement('button');
+      add.textContent = 'Add';
+      add.id = 'add-project-button';
+
+      const cancel = document.createElement('button');
+      cancel.textContent = 'Cancel';
+      cancel.id = 'cancel-add-project-button';
+
+
+      editElmnt.appendChildren(actionBtns, [add, cancel])
+
+      editElmnt.appendChildren(projectAddForm, [txtField, actionBtns])
+
+
+  editElmnt.appendChildren(overview, [projectDisplay, projectAddBtn, projectAddForm]);
 
   // editing bench, show tasks on a particular project
   const projBench = document.createElement('div');
@@ -77,8 +103,12 @@ export const userInterface = (() => {
       const doneDetails = document.createElement('button');
       doneDetails.id = 'done-button-details';
       doneDetails.textContent = 'Done';
+
+      const deteleTask = document.createElement('button');
+      deteleTask.id = 'delete-task-button';
+      deteleTask.textContent = 'Delete';
     
-      editElmnt.appendChildren(taskDetails, [taskTitle, taskDescription, taskDueDate, taskPriority, taskNotes, taskChecklist, doneDetails])
+      editElmnt.appendChildren(taskDetails, [taskTitle, taskDescription, taskDueDate, taskPriority, taskNotes, taskChecklist, doneDetails,deteleTask])
   
   editElmnt.appendChildren(projBench, [projName, taskDisplay, taskDetails]);
  
