@@ -1,8 +1,7 @@
-// control app flow
+// control app flow and events
 import { listRendererInstance, projectRendererInstance, taskRendererInstance, LIST } from "./render";
 import Project from "./projects";
 import Task from "./tasks";
-import * as domElmnt from './domElmnt';
 import editElmnt from "./editElmnt";
 
 
@@ -16,51 +15,56 @@ export default class App {
     this.taskRenderer = taskRendererInstance;
     this.renderList();
     this.addEventsStatic();
-    this.addEventsDynamic();
+    this.updateProjects();
   }
 
-  // load storage
+  // load storage - WIP
 
-  // add event listeners to buttons
+  // add event listeners to static buttons
   addEventsStatic() {
     
     // user wants to add a project
-    domElmnt.addProjectBtn.addEventListener('click', () => {
+    this.listRenderer.addProjectBtn.addEventListener('click', () => {
       this.refreshList();
+      this.refreshProjectForm();
     });
 
-    // user changes mind
-    domElmnt.addProjectCancel.addEventListener('click', () => {
+    // user does not want to add a project
+    this.listRenderer.addProjectCancel.addEventListener('click', () => {
       this.refreshList();
     });
 
     // user adds a project
-    domElmnt.addProjectAdd.addEventListener('click', () => {
-      this.list.addProject(new Project(`${domElmnt.addProjectField.value}`))
-      domElmnt.addProjectField.value = '';
+   this.listRenderer.addProjectAdd.addEventListener('click', () => {
+      this.list.addProject(new Project(`${this.listRenderer.addProjField.value}`))
       this.refreshList();
-      this.addEventsDynamic();
+      this.updateProjects();
     });
 
-    // user adds a task
-    domElmnt.addTaskBtn.addEventListener('click', () => {
+    // user wants to add a task
+    this.projectRenderer.addTaskBtn.addEventListener('click', () => {
       this.toggleTaskForm();
       this.refreshTaskForm();
-      domElmnt.addTaskAdd.textContent = 'Add';
+      this.taskAddMode();
     });
 
-    domElmnt.addTaskAdd.addEventListener('click', () => {
+    // user adds or edits a task
+    this.taskRenderer.edit.addEventListener('click', () => {
       const currentProject = this.projectRenderer.project;
       const currentTask = this.taskRenderer.task;
-      const title = domElmnt.addTitle.value;
-      const desc = domElmnt.addDesc.value
-      const date = domElmnt.addDate.value;
-      const prio = domElmnt.addPrio.value;
 
-      console.log(currentTask)
+      // Collect form values
+      const title = this.taskRenderer.title.value;
+      const desc = this.taskRenderer.desc.value;
+      const date = this.taskRenderer.dueDate.value;
+      const prio = this.taskRenderer.prio.value;
+
+      // div was reached through 'Add new Task'
       if (!currentTask) {
         currentProject.addTask(new Task(title, desc, date, prio))
       }
+
+      // div was reached through the 'Edit' buttons
       else {
         currentTask.title = title;
         currentTask.description = desc;
@@ -69,64 +73,58 @@ export default class App {
       }
 
       this.refreshProject(currentProject); 
-      this.addEventsDynamic();
       this.toggleTaskForm();
       this.taskRenderer.task = null;
     });
 
-    domElmnt.addTaskCancel.addEventListener('click', () => {
+    // user cancels task edit
+    this.taskRenderer.cancel.addEventListener('click', () => {
       this.toggleTaskForm();
-    });
-
-    // user is done editing
-    domElmnt.doneEditBtn.addEventListener('click', () => {
       this.hideDetails();
     });
 
     // user wants to delete task
-    domElmnt.deleteTaskBtn.addEventListener('click', () => {
+    this.taskRenderer.delete.addEventListener('click', () => {
       const currentProject = this.taskRenderer.project;
       const currentTask = this.taskRenderer.task;
       currentProject.removeTask(currentTask);
       this.hideDetails();
       this.refreshProject(currentProject);
-      this.addEventsDynamic();
+      this.taskRenderer.task = null;
     });
   }
 
-  addEventsDynamic() {
-
+  updateProjects() {
     // show tasks of the project when clicked
-    domElmnt.projectItems().forEach((item) => {
+    this.listRenderer.projectItems.forEach((item) => {
       item.addEventListener('click', () => {
         this.refreshProject(LIST.getProject(item.id));
-        domElmnt.taskMoreDetails.style.display = 'none';
+        this.loadProjectDisplay();
       })
     });
-    
-    // user completes task 
-    domElmnt.checkButtons().forEach((btn) => {
+  }
+
+  updateTasks() {
+    // user completes a task 
+    this.projectRenderer.completeBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const currentProject = this.projectRenderer.project;
         currentProject.removeTask(currentProject.getTask(btn.id));
         this.refreshProject(currentProject);
-        this.addEventsDynamic();
       })
     });
-
-    // user wamts to edit task
-    domElmnt.editButtons().forEach((btn) => {
+    // user wamts to edit a task
+    this.projectRenderer.editBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const currentProject = this.projectRenderer.project;
         const currentTask = currentProject.getTask(btn.id);
         this.taskRenderer.task = currentTask;
         this.taskRenderer.renderDetails(currentTask, currentProject);
-        // console.log(currentTask.priority);
+        this.taskEditMode();
       })
     });
   }
 
-  // Render list of projects
   renderList() {
     this.listRenderer.renderProjects(); 
   }
@@ -134,13 +132,15 @@ export default class App {
   // Refresh list of projects
   refreshList() {
     this.renderList();
-    editElmnt.toggleToFlex(domElmnt.addProjectForm);
-    editElmnt.toggleToFlex(domElmnt.addProjectBtn);
+    this.refreshProjectForm();
+    editElmnt.toggleToFlex(this.listRenderer.addProjectForm);
+    editElmnt.toggleToFlex(this.listRenderer.addProjectBtn);
   }
 
   // Refresh project view
   refreshProject(project) {
     this.projectRenderer.renderTasks(project);
+    this.updateTasks();
   }
 
   // Hide task deatails
@@ -149,15 +149,36 @@ export default class App {
   }
 
   toggleTaskForm() {
-    editElmnt.toggleToFlex(domElmnt.addTaskForm)
-  }
-  refreshTaskForm() {
-    domElmnt.addTitle.value = '';
-    domElmnt.addDesc.value = '';
-    domElmnt.addDate.value = '';
-    domElmnt.addPrio.value = '';
+    editElmnt.toggleToFlex(this.taskRenderer.details);
   }
 
+  refreshTaskForm() {
+    this.taskRenderer.title.value = '';
+    this.taskRenderer.desc.value = '';
+    this.taskRenderer.dueDate.value = '';
+    this.taskRenderer.prio.value = '';
+  }
+
+  refreshProjectForm() {
+    this.listRenderer.addProjField.value = '';
+  }
+
+  loadProjectDisplay() {
+    this.hideDetails();
+    this.projectRenderer.addTaskBtn.style.display = 'flex';
+    this.projectRenderer.taskDisplay.style.display = 'flex';
+  }
+
+  taskEditMode() {
+    this.taskRenderer.delete.style.display = 'block';
+    this.taskRenderer.cancel.style.display = 'none';
+  }
+
+  taskAddMode() {
+    this.taskRenderer.edit.textContent = 'Add';
+    this.taskRenderer.delete.style.display = 'none';
+    this.taskRenderer.cancel.style.display = 'block';
+  }
 }
 
 

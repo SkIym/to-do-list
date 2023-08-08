@@ -72,6 +72,7 @@ export const userInterface = (() => {
     
     const taskDisplay = document.createElement('div');
     editElmnt.addId(taskDisplay, 'task-display')
+    taskDisplay.style.display = 'none';
 
       const tdTag = document.createElement('p');
       editElmnt.addText(tdTag, 'Your Tasks')
@@ -84,28 +85,7 @@ export const userInterface = (() => {
     const addTaskBtn = document.createElement('button');
     addTaskBtn.id = 'add-task';
     addTaskBtn.textContent = 'Add new task';
-
-    // hidden task details div
-    const taskDetails = document.createElement('div');
-    editElmnt.addId(taskDetails, 'task-details');
-      
-      const taskTitle = document.createElement('div');
-      taskTitle.id = 'task-title';
-      const taskDescription = document.createElement('div');
-      taskDescription.id = 'task-desc';
-      const taskPriority = document.createElement('div');
-      taskPriority.id = 'task-prio';
-      const taskDueDate = document.createElement('div');
-      taskDueDate.id = 'task-date';
-      const doneDetails = document.createElement('button');
-      doneDetails.id = 'done-button-details';
-      doneDetails.textContent = 'Done';
-
-      const deteleTask = document.createElement('button');
-      deteleTask.id = 'delete-task-button';
-      deteleTask.textContent = 'Delete';
-    
-      editElmnt.appendChildren(taskDetails, [taskTitle, taskDescription, taskDueDate, taskPriority, doneDetails,deteleTask])
+    addTaskBtn.style.display = 'none';
 
     const addTaskForm = document.createElement('div');
     addTaskForm.id = 'add-task-form';
@@ -150,11 +130,15 @@ export const userInterface = (() => {
         addTaskCancel.id = 'add-task-cancel'
         addTaskCancel.textContent = 'Cancel';
 
-        editElmnt.appendChildren(addTaskActions, [addTaskAdd, addTaskCancel]);
+        const deteleTask = document.createElement('button');
+        deteleTask.id = 'delete-task-button';
+        deteleTask.textContent = 'Delete';
+
+        editElmnt.appendChildren(addTaskActions, [addTaskAdd, addTaskCancel, deteleTask]);
 
       editElmnt.appendChildren(addTaskForm, [titleInput, descInput, dueDateInput, priorityInput, addTaskActions]);
 
-  editElmnt.appendChildren(projBench, [projName, taskDisplay, addTaskBtn, taskDetails, addTaskForm]);
+  editElmnt.appendChildren(projBench, [projName, taskDisplay, addTaskBtn, addTaskForm]);
  
   // add to DOM
   editElmnt.appendChildren(appGrid, [header, overview, projBench]);

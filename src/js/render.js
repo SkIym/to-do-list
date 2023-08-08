@@ -13,6 +13,8 @@ class taskRenderer {
     this.desc = domElmnt.addDesc;
     this.prio = domElmnt.addPrio;
     this.edit = domElmnt.addTaskAdd;
+    this.cancel = domElmnt.addTaskCancel;
+    this.delete = domElmnt.deleteTaskBtn;
   }
 
   renderDetails(currentTask, currentProject) {
@@ -35,9 +37,14 @@ class projectRenderer {
     this.tdItems = document.getElementById('task-items');
     this.name = document.getElementById('project-name');
     this.project = null;
+    this.taskDisplay = domElmnt.taskDisplay;
+    this.addTaskBtn = domElmnt.addTaskBtn;
+    this.completeBtns = domElmnt.completeButtons();
+    this.editBtns = domElmnt.editButtons();
   }
 
   renderTasks(currentProject) {
+    // Update rendered project
     this.project = currentProject;
     this.tdItems.innerHTML = '';
     editElmnt.addText(this.name, currentProject.name);
@@ -68,6 +75,10 @@ class projectRenderer {
       this.tdItems.appendChild(taskItem);
       task_id++;
     }
+
+    // Recollect complete and edit buttons
+    this.completeBtns = domElmnt.completeButtons();
+    this.editBtns = domElmnt.editButtons();
   }
 }
 
@@ -79,11 +90,18 @@ class listRenderer {
   constructor(list) {
     this.list = list;
     this.pdItems = document.getElementById('project-items');
+    this.addProjField = domElmnt.addProjectField;
+    this.addProjectForm = domElmnt.addProjectForm;
+    this.addProjectBtn = domElmnt.addProjectBtn;
+    this.addProjectCancel = domElmnt.addProjectCancel;
+    this.addProjectAdd = domElmnt.addProjectAdd;
+    this.projectItems = domElmnt.projectItems();
   }
 
   renderProjects() {
     this.pdItems.innerHTML = '';
     let project_id = 0;
+    
     for (const proj of this.list.projects) {
       const projItem = document.createElement('div');
       projItem.classList.add('project-item');
@@ -92,6 +110,9 @@ class listRenderer {
       projItem.id = `${project_id}`;
       project_id++;
     }
+
+    // Recollect project items for render
+    this.projectItems = domElmnt.projectItems();
   }
 }
 

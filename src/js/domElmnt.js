@@ -13,9 +13,11 @@ export function editButtons() {
   return document.querySelectorAll('.edit-task');
 }
 
-export function checkButtons() {
+export function completeButtons() {
   return document.querySelectorAll('.check-task');
 }
+
+export const taskDisplay = document.getElementById('task-display');
 
 export const addTaskBtn = document.getElementById('add-task');
 export const addTaskForm = document.getElementById('add-task-form');
@@ -26,9 +28,6 @@ export const addTitle = document.getElementById('task-title-input');
 export const addDesc = document.getElementById('task-desc-input');
 export const addDate = document.getElementById('task-date-input');
 export const addPrio = document.getElementById('task-prio-input');
-   
 
-
-export const doneEditBtn = document.getElementById('done-button-details');
 export const deleteTaskBtn = document.getElementById('delete-task-button');
 export const taskMoreDetails = document.getElementById('task-details');
