@@ -1,5 +1,5 @@
 // todo-items
-import { format, formatDistanceToNow } from 'date-fns';
+import { format, formatDistance } from 'date-fns';
 
 export default class Task {
   constructor(title, description, dueDate, dueTime, priority) {
@@ -32,7 +32,6 @@ export default class Task {
   }
 
   formattedDueDate() {
-    console.log(this._dueDate)
     return format(new Date(this._dueDate), 'MMM dd');
   }
 
@@ -45,7 +44,7 @@ export default class Task {
   }
 
   timeDistance() {
-    return formatDistanceToNow(new Date(this._dueDate))
+    return formatDistance(new Date(), new Date(this._dueDate))
   }
 
   set dueTime(time) {

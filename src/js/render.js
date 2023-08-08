@@ -63,7 +63,7 @@ class projectRenderer {
     let task_id = 0;
     for (const task of currentProject.tasks) {
       const taskItem = document.createElement('div');
-      editElmnt.addClass(taskItem, ['task-item']);
+      taskItem.classList.add('task-item')
       taskItem.innerHTML = `
         <p>${task.title}</p>
         <p>${task.formattedDueDate()}</p>
@@ -86,6 +86,7 @@ class projectRenderer {
       taskItem.appendChild(checkTaskBtn);
       
       this.tdItems.appendChild(taskItem);
+      this.colorAccdgToPrio(task.priority, taskItem)
       task_id++;
     }
 
@@ -93,6 +94,19 @@ class projectRenderer {
     this.completeBtns = domElmnt.completeButtons();
     this.editBtns = domElmnt.editButtons();
   }
+  
+  colorAccdgToPrio(prio, element) {
+    if (prio === 1) {
+      element.classList.add('low-prio');
+    }
+    else if (prio === 2) {
+      element.classList.add('mid-prio');
+    }
+    else {
+      element.classList.add('high-prio');
+    }
+  }
+
 }
 
 export const projectRendererInstance = new projectRenderer();

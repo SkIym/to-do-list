@@ -44,9 +44,24 @@
 
 /* project bench */
 
+#task-display {
+  flex-direction: column;
+}
+
 .task-item {
   display: flex;
+}
 
+.low-prio {
+  background-color:  #d1b1c8;
+}
+
+.mid-prio {
+  background-color:  #8c7284;
+}
+
+.high-prio {
+  background-color:   #7a6174;
 }
 
 #task-details {

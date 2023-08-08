@@ -121,6 +121,7 @@ export const userInterface = (() => {
         const low = document.createElement('option');
         low.textContent = 'Low';
         low.value = 1;
+        low.setAttribute('selected', '');
     
         editElmnt.appendChildren(priorityInput, [high, mid, low])
 

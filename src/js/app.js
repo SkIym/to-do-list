@@ -57,18 +57,17 @@ export default class App {
       let title = this.taskRenderer.title.value;
       let desc = this.taskRenderer.desc.value;
       let date = this.taskRenderer.dueDate.value;
-      let prio = this.taskRenderer.prio.value;
+      let prio = parseInt(this.taskRenderer.prio.value);
       let time = this.taskRenderer.dueTime.value;
 
       if (date && title) {
-        // div was reached through 'Add new Task'
+        // form was reached through 'Add new Task'
         if (!currentTask) {
           currentProject.addTask(new Task(title, desc, date, time, prio))
         }
 
-        // div was reached through the 'Edit' buttons
+        // form was reached through the 'Edit' buttons
         else {
-          console.log('editing')
           currentTask.title = title;
           currentTask.description = desc;
           currentTask.dueDate = date;
@@ -90,7 +89,7 @@ export default class App {
       this.hideDetails();
     });
 
-    // user wants to delete task
+    // user deletes a task
     this.taskRenderer.delete.addEventListener('click', () => {
       const currentProject = this.taskRenderer.project;
       const currentTask = this.taskRenderer.task;
@@ -163,7 +162,7 @@ export default class App {
     this.taskRenderer.title.value = '';
     this.taskRenderer.desc.value = '';
     this.taskRenderer.dueDate.value = '';
-    this.taskRenderer.prio.value = '';
+    this.taskRenderer.prio.value = '1';
     this.taskRenderer.dueTime.value = '';
   }
 

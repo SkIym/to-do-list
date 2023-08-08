@@ -15,7 +15,9 @@ export default class Project {
   }
 
   get tasks() {
-    return this._tasks
+    return this._tasks.sort((a, b) => {
+      return a.priority > b.priority ? -1 : 1;
+    });
   }
 
   getTask(id) {
