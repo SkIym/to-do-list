@@ -1,5 +1,4 @@
 import editElmnt from "./editElmnt";
-import TodoList from "./list";
 import * as domElmnt from './domElmnt';
 
 // render details of the task
@@ -112,7 +111,7 @@ class projectRenderer {
 export const projectRendererInstance = new projectRenderer();
 
 // render list of projects
-class listRenderer {
+export class listRenderer {
 
   constructor(list) {
     this.list = list;
@@ -142,5 +141,4 @@ class listRenderer {
   }
 }
 
-export const LIST = new TodoList();
-export const listRendererInstance = new listRenderer(LIST);
+// export const listRendererInstance = new listRenderer(LIST);

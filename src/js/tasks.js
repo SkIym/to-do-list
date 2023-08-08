@@ -32,6 +32,7 @@ export default class Task {
   }
 
   formattedDueDate() {
+    console.log(typeof(this._dueDate), this._dueDate)
     return format(new Date(this._dueDate), 'MMM dd');
   }
 
@@ -59,4 +60,8 @@ export default class Task {
     this._priority = priority;
   }
 
+  static fromStorage(taskData) {
+    const task = new Task(taskData._title, taskData._description, taskData._dueDate, taskData._priority);
+    return task;
+  }
 }

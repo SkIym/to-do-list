@@ -1,4 +1,5 @@
 // List of projects
+import Project from "./projects";
 
 export default class TodoList {
   constructor() {
@@ -7,6 +8,10 @@ export default class TodoList {
 
   get projects() {
     return this._projects;
+  }
+
+  set projects(projects) {
+    this._projects = projects
   }
 
   getProject(id) {
@@ -21,6 +26,12 @@ export default class TodoList {
     this._projects = this._projects.filter((project) => {
       return project !== rm;
      })
+  }
+
+  static fromStorage(listData) {
+    const list = new TodoList();
+    list.projects = listData._projects.map(projectData => Project.fromStorage(projectData));
+    return list;
   }
 
 }

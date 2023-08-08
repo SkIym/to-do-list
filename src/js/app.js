@@ -1,24 +1,42 @@
 // control app flow and events
-import { listRendererInstance, projectRendererInstance, taskRendererInstance, LIST } from "./render";
+import { listRenderer, projectRendererInstance, taskRendererInstance } from "./render";
 import Project from "./projects";
 import Task from "./tasks";
+import TodoList from './list';
 import editElmnt from "./editElmnt";
 
 
 export default class App {
   constructor() {
-    this.list = LIST;
-    this.list.addProject(new Project('Home'));
-    this.list.addProject(new Project('School'));
-    this.listRenderer = listRendererInstance;
+    this.list = null;
+    this.listRenderer = null;
     this.projectRenderer = projectRendererInstance;
     this.taskRenderer = taskRendererInstance;
+    this.loadFromLocalStorage();
     this.renderList();
     this.addEventsStatic();
-    this.updateProjects();
   }
 
-  // load storage - WIP
+  // load storage 
+
+  saveToLocalStorage() {
+    localStorage.setItem('todolist', JSON.stringify(this.list));
+  }
+
+  loadFromLocalStorage() {
+    const storedData = localStorage.getItem('todolist');
+    console.log(JSON.parse(storedData))
+    if (storedData) {
+      this.list = TodoList.fromStorage(JSON.parse(storedData));
+    }
+    else {
+      this.list = new TodoList();
+      this.list.addProject(new Project('Home'));
+      this.list.addProject(new Project('School'));
+    }
+    this.listRenderer = new listRenderer(this.list);
+    this.renderList();
+  }
 
   // add event listeners to static buttons
   addEventsStatic() {
@@ -38,6 +56,7 @@ export default class App {
    this.listRenderer.addProjectAdd.addEventListener('click', () => {
       this.list.addProject(new Project(`${this.listRenderer.addProjField.value}`))
       this.refreshList();
+      this.saveToLocalStorage();
     });
 
     // user wants to add a task
@@ -104,7 +123,7 @@ export default class App {
     // show tasks of the project when clicked
     this.listRenderer.projectItems.forEach((item) => {
       item.addEventListener('click', () => {
-        this.refreshProject(LIST.getProject(item.id));
+        this.refreshProject(this.list.getProject(item.id));
         this.loadProjectDisplay();
       })
     });
@@ -132,21 +151,23 @@ export default class App {
 
   renderList() {
     this.listRenderer.renderProjects();
+    this.updateProjects();
   }
 
   // Refresh list of projects
   refreshList() {
     this.renderList();
     this.refreshProjectForm();
-    this.updateProjects();
     editElmnt.toggleToFlex(this.listRenderer.addProjectForm);
     editElmnt.toggleToFlex(this.listRenderer.addProjectBtn);
   }
 
   // Refresh project view
   refreshProject(project) {
+    console.log(project)
     this.projectRenderer.renderTasks(project);
     this.updateTasks();
+    this.saveToLocalStorage();
   }
 
   // Hide task deatails
@@ -162,7 +183,7 @@ export default class App {
     this.taskRenderer.title.value = '';
     this.taskRenderer.desc.value = '';
     this.taskRenderer.dueDate.value = '';
-    this.taskRenderer.prio.value = '1';
+    this.taskRenderer.prio.value = 1;
     this.taskRenderer.dueTime.value = '';
   }
 
