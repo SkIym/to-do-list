@@ -103,6 +103,10 @@ export const userInterface = (() => {
       dueDateInput.id = 'task-date-input';
       dueDateInput.type = 'date';
 
+      const dueTimeInput = document.createElement('input');
+      dueTimeInput.id = 'task-time-input';
+      dueTimeInput.type = 'time';
+
       const priorityInput = document.createElement('select');
       priorityInput.id = 'task-prio-input';
 
@@ -123,6 +127,7 @@ export const userInterface = (() => {
       const addTaskActions = document.createElement('div')
       
         const addTaskAdd = document.createElement('button');
+        // addTaskAdd.type = 'submit';
         addTaskAdd.id = 'add-task-add'
         addTaskAdd.textContent = 'Add';
 
@@ -135,17 +140,20 @@ export const userInterface = (() => {
         deteleTask.textContent = 'Delete';
 
         editElmnt.appendChildren(addTaskActions, [addTaskAdd, addTaskCancel, deteleTask]);
+      
+        const warning = document.createElement('p');
+        warning.id = 'input-warning';
 
-      editElmnt.appendChildren(addTaskForm, [titleInput, descInput, dueDateInput, priorityInput, addTaskActions]);
+      editElmnt.appendChildren(addTaskForm, [titleInput, descInput, dueDateInput, dueTimeInput, priorityInput, addTaskActions, warning]);
 
   editElmnt.appendChildren(projBench, [projName, taskDisplay, addTaskBtn, addTaskForm]);
- 
+  
+  
+
   // add to DOM
   editElmnt.appendChildren(appGrid, [header, overview, projBench]);
-
-})();
-
-export const projectForm = (() => {
-
+  document.querySelectorAll('input').forEach((elm) => {
+    elm.setAttribute('required', '');
+  });
 
 })();

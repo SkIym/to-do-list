@@ -28,6 +28,8 @@ export const addTitle = document.getElementById('task-title-input');
 export const addDesc = document.getElementById('task-desc-input');
 export const addDate = document.getElementById('task-date-input');
 export const addPrio = document.getElementById('task-prio-input');
+export const addTime = document.getElementById('task-time-input');
+export const inputWarning = document.getElementById('input-warning');
 
 export const deleteTaskBtn = document.getElementById('delete-task-button');
 export const taskMoreDetails = document.getElementById('task-details');

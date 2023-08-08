@@ -10,22 +10,33 @@ class taskRenderer {
     this.details = domElmnt.addTaskForm;
     this.title = domElmnt.addTitle;
     this.dueDate = domElmnt.addDate;
+    this.dueTime = domElmnt.addTime;
     this.desc = domElmnt.addDesc;
     this.prio = domElmnt.addPrio;
     this.edit = domElmnt.addTaskAdd;
     this.cancel = domElmnt.addTaskCancel;
     this.delete = domElmnt.deleteTaskBtn;
+    this.warning = domElmnt.inputWarning;
   }
 
   renderDetails(currentTask, currentProject) {
     this.task = currentTask;
     this.project = currentProject;
+    this.warning.textContent = '';
     this.details.style.display = 'flex';
-    this.edit.textContent = 'Done';
     this.title.value = `${this.task.title}`;
+    this.dueTime.value = `${this.task.dueTime}`;
     this.desc.value = `${this.task.description}`;
     this.dueDate.value = `${this.task.dueDate}`;
     this.prio.value = `${this.task.priority}`;
+  }
+
+  showWarning() {
+    this.warning.textContent = 'Please input task title and due date';
+  }
+
+  hideWarning() {
+    this.warning.textContent = '';
   }
 }
 
@@ -55,7 +66,9 @@ class projectRenderer {
       editElmnt.addClass(taskItem, ['task-item']);
       taskItem.innerHTML = `
         <p>${task.title}</p>
-        <p>${task.dueDate}</p>
+        <p>${task.formattedDueDate()}</p>
+        <p>Time remaining:</p>
+        <p>${task.timeDistance()}</p>
       `;
 
       // Append an edit button
@@ -110,7 +123,6 @@ class listRenderer {
       projItem.id = `${project_id}`;
       project_id++;
     }
-
     // Recollect project items for render
     this.projectItems = domElmnt.projectItems();
   }

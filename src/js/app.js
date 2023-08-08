@@ -38,7 +38,6 @@ export default class App {
    this.listRenderer.addProjectAdd.addEventListener('click', () => {
       this.list.addProject(new Project(`${this.listRenderer.addProjField.value}`))
       this.refreshList();
-      this.updateProjects();
     });
 
     // user wants to add a task
@@ -46,6 +45,7 @@ export default class App {
       this.toggleTaskForm();
       this.refreshTaskForm();
       this.taskAddMode();
+      this.taskRenderer.hideWarning();
     });
 
     // user adds or edits a task
@@ -54,27 +54,34 @@ export default class App {
       const currentTask = this.taskRenderer.task;
 
       // Collect form values
-      const title = this.taskRenderer.title.value;
-      const desc = this.taskRenderer.desc.value;
-      const date = this.taskRenderer.dueDate.value;
-      const prio = this.taskRenderer.prio.value;
+      let title = this.taskRenderer.title.value;
+      let desc = this.taskRenderer.desc.value;
+      let date = this.taskRenderer.dueDate.value;
+      let prio = this.taskRenderer.prio.value;
+      let time = this.taskRenderer.dueTime.value;
 
-      // div was reached through 'Add new Task'
-      if (!currentTask) {
-        currentProject.addTask(new Task(title, desc, date, prio))
+      if (date && title) {
+        // div was reached through 'Add new Task'
+        if (!currentTask) {
+          currentProject.addTask(new Task(title, desc, date, time, prio))
+        }
+
+        // div was reached through the 'Edit' buttons
+        else {
+          console.log('editing')
+          currentTask.title = title;
+          currentTask.description = desc;
+          currentTask.dueDate = date;
+          currentTask.dueTime = time;
+          currentTask.priority = prio;
+        }
+        this.refreshProject(currentProject); 
+        this.toggleTaskForm();
+        this.taskRenderer.task = null;
       }
-
-      // div was reached through the 'Edit' buttons
       else {
-        currentTask.title = title;
-        currentTask.description = desc;
-        currentTask.dueDate = date;
-        currentTask.priority = prio;
+        this.taskRenderer.showWarning();
       }
-
-      this.refreshProject(currentProject); 
-      this.toggleTaskForm();
-      this.taskRenderer.task = null;
     });
 
     // user cancels task edit
@@ -118,7 +125,6 @@ export default class App {
       btn.addEventListener('click', () => {
         const currentProject = this.projectRenderer.project;
         const currentTask = currentProject.getTask(btn.id);
-        this.taskRenderer.task = currentTask;
         this.taskRenderer.renderDetails(currentTask, currentProject);
         this.taskEditMode();
       })
@@ -126,13 +132,14 @@ export default class App {
   }
 
   renderList() {
-    this.listRenderer.renderProjects(); 
+    this.listRenderer.renderProjects();
   }
 
   // Refresh list of projects
   refreshList() {
     this.renderList();
     this.refreshProjectForm();
+    this.updateProjects();
     editElmnt.toggleToFlex(this.listRenderer.addProjectForm);
     editElmnt.toggleToFlex(this.listRenderer.addProjectBtn);
   }
@@ -157,6 +164,7 @@ export default class App {
     this.taskRenderer.desc.value = '';
     this.taskRenderer.dueDate.value = '';
     this.taskRenderer.prio.value = '';
+    this.taskRenderer.dueTime.value = '';
   }
 
   refreshProjectForm() {
@@ -170,6 +178,7 @@ export default class App {
   }
 
   taskEditMode() {
+    this.taskRenderer.edit.textContent = 'Done';
     this.taskRenderer.delete.style.display = 'block';
     this.taskRenderer.cancel.style.display = 'none';
   }
