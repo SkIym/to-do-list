@@ -63,28 +63,29 @@ class projectRenderer {
       const taskItem = document.createElement('div');
       taskItem.classList.add('task-item')
       taskItem.innerHTML = `
-        <p>${task.title}</p>
-        <p>${task.formattedDueDate()}</p>
-        <p>Time remaining:</p>
-        <p>${task.timeDistance()}</p>
+        <div class='task-info'> 
+          <p>${task.title} - </p>
+          <p>${task.formattedDueDate()}</p>
+        </div>
       `;
 
       // Append an edit button
+      const taskBtns = document.createElement('div');
+      taskBtns.id = 'task-action-buttons';
+
       const editTaskBtn = document.createElement('button');
       editTaskBtn.textContent = 'Edit';
       editTaskBtn.id = `${task_id}`;
-      editTaskBtn.classList.add('edit-task');
-      taskItem.appendChild(editTaskBtn);
-
+      editElmnt.addClass(editTaskBtn, ['task-action', 'edit-task'])
       // Append a complete button
       const checkTaskBtn = document.createElement('button');
       checkTaskBtn.textContent = 'Complete';
       checkTaskBtn.id = `${task_id}`;
-      checkTaskBtn.classList.add('check-task');
-      taskItem.appendChild(checkTaskBtn);
-      
+      editElmnt.addClass(checkTaskBtn, ['task-action', 'check-task'])
+
+      editElmnt.appendChildren(taskBtns, [editTaskBtn, checkTaskBtn]);
+      taskItem.appendChild(taskBtns);
       this.tdItems.appendChild(taskItem);
-      console.log(task.priority);
       this.colorAccdgToPrio(task.priority, taskItem)
       task_id++;
     }

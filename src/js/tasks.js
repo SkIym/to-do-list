@@ -1,5 +1,5 @@
 // todo-items
-import { format, formatDistance } from 'date-fns';
+import { format } from 'date-fns';
 
 
 export default class Task {
@@ -42,10 +42,6 @@ export default class Task {
 
   get dueTime() {
     return this._dueTime;
-  }
-
-  timeDistance() {
-    return formatDistance(new Date(), new Date(this._dueDate))
   }
 
   set dueTime(time) {

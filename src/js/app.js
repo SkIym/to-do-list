@@ -131,6 +131,7 @@ export default class App {
       })
     });
     // user wamts to edit a task
+
     this.projectRenderer.editBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const currentProject = this.projectRenderer.project;
@@ -177,6 +178,7 @@ export default class App {
     this.taskRenderer.dueDate.value = '';
     this.taskRenderer.prio.value = 1;
     this.taskRenderer.dueTime.value = '';
+    this.taskRenderer.tag.textContent = 'Add a task';
   }
 
   refreshProjectForm() {
@@ -196,7 +198,6 @@ export default class App {
 
   taskAddMode() {
     this.taskRenderer.edit.textContent = 'Add';
-    this.taskRenderer.tag.textContent = 'Add a task';
     this.taskRenderer.delete.style.display = 'none';
     this.refreshTaskForm();
   }

@@ -78,12 +78,32 @@ export const userInterface = (() => {
     taskDisplay.style.display = 'none';
 
       const tdTag = document.createElement('p');
-      editElmnt.addText(tdTag, 'Your Tasks')
-      
+      tdTag.textContent = 'Your Tasks';
+
+      const prioTag = document.createElement('div');
+      prioTag.id = 'prio-tag';
+
+        const clue = document.createElement('p');
+        clue.textContent = 'Priority: ';
+
+        const lowP = document.createElement('p');
+        lowP.textContent = 'Low';
+        lowP.id = 'low-prio-tag';
+
+        const midP = document.createElement('p');
+        midP.textContent = 'Mid';
+        midP.id = 'mid-prio-tag';
+
+        const highP = document.createElement('p');
+        highP.textContent = 'High';
+        highP.id = 'high-prio-tag';
+
+        editElmnt.appendChildren(prioTag, [clue, lowP, midP, highP])
+
       const tdItems = document.createElement('div')
       editElmnt.addId(tdItems, 'task-items');
 
-    editElmnt.appendChildren(taskDisplay, [tdTag, tdItems]);
+    editElmnt.appendChildren(taskDisplay, [tdTag, prioTag, tdItems]);
 
     const addTaskForm = document.createElement('div');
     addTaskForm.id = 'add-task-form';
@@ -132,7 +152,6 @@ export const userInterface = (() => {
         const addTaskAdd = document.createElement('button');
         addTaskAdd.id = 'add-task-add'
         addTaskAdd.textContent = 'Add';
-
 
         const deteleTask = document.createElement('button');
         deteleTask.id = 'delete-task-button';
