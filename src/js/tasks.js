@@ -1,6 +1,7 @@
 // todo-items
 import { format, formatDistance } from 'date-fns';
 
+
 export default class Task {
   constructor(title, description, dueDate, dueTime, priority) {
     this._title = title;
@@ -32,7 +33,6 @@ export default class Task {
   }
 
   formattedDueDate() {
-    console.log(typeof(this._dueDate), this._dueDate)
     return format(new Date(this._dueDate), 'MMM dd');
   }
 
@@ -61,7 +61,8 @@ export default class Task {
   }
 
   static fromStorage(taskData) {
-    const task = new Task(taskData._title, taskData._description, taskData._dueDate, taskData._priority);
+    console.log(taskData._priority);
+    const task = new Task(taskData._title, taskData._description, taskData._dueDate, taskData._dueTime, taskData._priority);
     return task;
   }
 }

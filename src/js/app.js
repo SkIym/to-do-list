@@ -35,7 +35,6 @@ export default class App {
       this.list.addProject(new Project('School'));
     }
     this.listRenderer = new listRenderer(this.list);
-    this.renderList();
   }
 
   // add event listeners to static buttons
@@ -54,9 +53,12 @@ export default class App {
 
     // user adds a project
    this.listRenderer.addProjectAdd.addEventListener('click', () => {
-      this.list.addProject(new Project(`${this.listRenderer.addProjField.value}`))
-      this.refreshList();
-      this.saveToLocalStorage();
+      let projectName = this.listRenderer.addProjField.value;
+      if(projectName) {
+        this.list.addProject(new Project(`${projectName}`))
+        this.refreshList();
+        this.saveToLocalStorage();
+      }
     });
 
     // user wants to add a task

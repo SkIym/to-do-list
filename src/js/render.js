@@ -85,6 +85,7 @@ class projectRenderer {
       taskItem.appendChild(checkTaskBtn);
       
       this.tdItems.appendChild(taskItem);
+      console.log(task.priority);
       this.colorAccdgToPrio(task.priority, taskItem)
       task_id++;
     }
