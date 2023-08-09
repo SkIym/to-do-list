@@ -127,7 +127,7 @@ export default class App {
         const currentProject = this.projectRenderer.project;
         currentProject.removeTask(currentProject.getTask(btn.id));
         this.refreshProject(currentProject);
-        this.refreshTaskForm();
+        this.taskAddMode();
       })
     });
     // user wamts to edit a task
@@ -160,6 +160,7 @@ export default class App {
     console.log(project)
     this.projectRenderer.renderTasks(project);
     this.updateTasks();
+    this.refreshTaskForm();
     this.saveToLocalStorage();
   }
 

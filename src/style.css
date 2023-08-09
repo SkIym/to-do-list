@@ -196,10 +196,8 @@ body {
 
 #task-display > p {
   text-align: center;
-}
-
-#add-task-form {
-  
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 #prio-tag {
@@ -221,13 +219,19 @@ body {
   display: flex;
   justify-content: space-between;
   border-radius: 4px;
-  background-color: rgb(245, 245, 245);
-  border-left: 3px solid transparent;
+  border: 1px solid transparent;
+  background-color: rgb(251, 251, 251);
+  /* border-left: 3px solid transparent; */
   box-shadow: var(--light-box-shadow);
+  transition: 0.2s ease-in-out;
 }
+
 
 #task-action-buttons {
   display: flex;
+  align-items: center;
+  padding-right: 10px;
+  gap: 10px;
 }
 
 .task-info {
@@ -239,9 +243,8 @@ body {
 .task-action {
   border: none;
   transition: 0.2s ease-in-out;
-  height: 100%;
-  padding: 10px;
-  border-radius: 4px;
+  border-radius: 1rem;
+  padding: 5px 10px;
 }
 
 .edit-task {
@@ -255,7 +258,6 @@ body {
 .task-action:hover {
   cursor: pointer;
   color: #569c95; 
-  border-radius: 0px;
 }
 
 .low-prio {
@@ -286,4 +288,53 @@ body {
   transform: translate(-50%, -50%);
 }
 
+/* task form */
 
+#add-task-form {
+  padding: 20px;
+  gap: 10px; 
+}
+
+.input-label {
+  font-weight: 200;
+  /* text-align: center; */
+  font-size: 0.9rem;
+}
+
+#add-task-form > input, select {
+  padding: 15px 10px;
+}
+
+#add-task-actions {
+  display: flex;
+  gap: 5px;
+}
+
+#add-task-actions > button {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#add-task-add {
+  background-color: #99e1d9;
+}
+
+#add-task-add:hover {
+  background-color: #b2ddd8;
+}
+
+#delete-task-button {
+  background-color: #e893a2;
+}
+
+#delete-task-button:hover {
+  background-color: #e8a7b3;
+}
+
+#input-warning {
+  color: #e893a2;
+  text-align: center;
+}

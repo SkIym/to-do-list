@@ -113,21 +113,51 @@ export const userInterface = (() => {
       tag.textContent = 'Add a task';
       tag.id = 'add-task-tag'
 
+      const labelTitle = document.createElement('p');
+      labelTitle.textContent = 'Title';
+      labelTitle.classList.add('input-label');
+
       const titleInput = document.createElement('input');
       titleInput.id = 'task-title-input';
       titleInput.type = 'text';
+      titleInput.placeholder = 'Title*';
+
+      const labelDesc = document.createElement('p');
+      labelDesc.textContent = 'Description';
+      labelDesc.classList.add('input-label');
 
       const descInput = document.createElement('input');
       descInput.id = 'task-desc-input';
       descInput.type = 'text';
+      descInput.placeholder = 'Description';
+
+      const labelDate = document.createElement('p');
+      labelDate.textContent = 'Due On';
+      labelDate.classList.add('input-label');
 
       const dueDateInput = document.createElement('input');
       dueDateInput.id = 'task-date-input';
-      dueDateInput.type = 'date';
+      dueDateInput.type = 'text';
+      dueDateInput.placeholder = `Due Date*`;
+      dueDateInput.onfocus = () => {
+        dueDateInput.type = 'date';
+      };
+
+      const labelTime = document.createElement('p');
+      labelTime.textContent = 'Due At'
+      labelTime.classList.add('input-label');
 
       const dueTimeInput = document.createElement('input');
       dueTimeInput.id = 'task-time-input';
-      dueTimeInput.type = 'time';
+      dueTimeInput.type = 'text';
+      dueTimeInput.placeholder = `Due Time`;
+      dueTimeInput.onfocus = () => {
+        dueTimeInput.type = 'time';
+      };
+
+      const labelPrio = document.createElement('p');
+      labelPrio.textContent = 'Task Priority';
+      labelPrio.classList.add('input-label');
 
       const priorityInput = document.createElement('select');
       priorityInput.id = 'task-prio-input';
@@ -148,7 +178,8 @@ export const userInterface = (() => {
         editElmnt.appendChildren(priorityInput, [high, mid, low])
 
       const addTaskActions = document.createElement('div')
-      
+      addTaskActions.id = 'add-task-actions';
+
         const addTaskAdd = document.createElement('button');
         addTaskAdd.id = 'add-task-add'
         addTaskAdd.textContent = 'Add';
@@ -165,7 +196,7 @@ export const userInterface = (() => {
         const warning = document.createElement('p');
         warning.id = 'input-warning';
 
-      editElmnt.appendChildren(addTaskForm, [tag, titleInput, descInput, dueDateInput, dueTimeInput, priorityInput, addTaskActions, warning]);
+      editElmnt.appendChildren(addTaskForm, [tag, labelTitle,titleInput, labelDesc, descInput, labelDate, dueDateInput, labelTime, dueTimeInput, labelPrio, priorityInput, addTaskActions, warning]);
 
       editElmnt.appendChildren(projectDisp, [taskDisplay, addTaskForm])
   editElmnt.appendChildren(projBench, [projName, projectDisp]);
