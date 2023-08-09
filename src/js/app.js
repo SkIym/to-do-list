@@ -61,18 +61,11 @@ export default class App {
       }
     });
 
-    // user wants to add a task
-    this.projectRenderer.addTaskBtn.addEventListener('click', () => {
-      this.toggleTaskForm();
-      this.refreshTaskForm();
-      this.taskAddMode();
-      this.taskRenderer.hideWarning();
-    });
-
     // user adds or edits a task
     this.taskRenderer.edit.addEventListener('click', () => {
       const currentProject = this.projectRenderer.project;
       const currentTask = this.taskRenderer.task;
+      this.taskRenderer.hideWarning();
 
       // Collect form values
       let title = this.taskRenderer.title.value;
@@ -96,7 +89,7 @@ export default class App {
           currentTask.priority = prio;
         }
         this.refreshProject(currentProject); 
-        this.toggleTaskForm();
+        this.taskAddMode();
         this.taskRenderer.task = null;
       }
       else {
@@ -104,20 +97,16 @@ export default class App {
       }
     });
 
-    // user cancels task edit
-    this.taskRenderer.cancel.addEventListener('click', () => {
-      this.toggleTaskForm();
-      this.hideDetails();
-    });
 
     // user deletes a task
     this.taskRenderer.delete.addEventListener('click', () => {
       const currentProject = this.taskRenderer.project;
       const currentTask = this.taskRenderer.task;
       currentProject.removeTask(currentTask);
-      this.hideDetails();
+      // this.hideDetails();
       this.refreshProject(currentProject);
       this.taskRenderer.task = null;
+      this.taskAddMode();
     });
   }
 
@@ -138,6 +127,7 @@ export default class App {
         const currentProject = this.projectRenderer.project;
         currentProject.removeTask(currentProject.getTask(btn.id));
         this.refreshProject(currentProject);
+        this.refreshTaskForm();
       })
     });
     // user wamts to edit a task
@@ -194,21 +184,21 @@ export default class App {
   }
 
   loadProjectDisplay() {
-    this.hideDetails();
-    this.projectRenderer.addTaskBtn.style.display = 'flex';
     this.projectRenderer.taskDisplay.style.display = 'flex';
+    this.taskRenderer.details.style.display = 'flex';
   }
 
   taskEditMode() {
     this.taskRenderer.edit.textContent = 'Done';
+    this.taskRenderer.tag.textContent = 'Edit task';
     this.taskRenderer.delete.style.display = 'block';
-    this.taskRenderer.cancel.style.display = 'none';
   }
 
   taskAddMode() {
     this.taskRenderer.edit.textContent = 'Add';
+    this.taskRenderer.tag.textContent = 'Add a task';
     this.taskRenderer.delete.style.display = 'none';
-    this.taskRenderer.cancel.style.display = 'block';
+    this.refreshTaskForm();
   }
 }
 

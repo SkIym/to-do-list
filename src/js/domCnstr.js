@@ -66,8 +66,6 @@ export const userInterface = (() => {
   const projBench = document.createElement('div');
   projBench.id = 'project-bench';
 
-
-
     const projName = document.createElement('p');
     editElmnt.addText(projName, 'Create a project and start adding tasks!');
     editElmnt.addId(projName, 'project-name')
@@ -85,16 +83,15 @@ export const userInterface = (() => {
       const tdItems = document.createElement('div')
       editElmnt.addId(tdItems, 'task-items');
 
-      editElmnt.appendChildren(taskDisplay, [tdTag, tdItems]);
-
-    const addTaskBtn = document.createElement('button');
-    addTaskBtn.id = 'add-task';
-    addTaskBtn.textContent = 'Add new task';
-    addTaskBtn.style.display = 'none';
+    editElmnt.appendChildren(taskDisplay, [tdTag, tdItems]);
 
     const addTaskForm = document.createElement('div');
     addTaskForm.id = 'add-task-form';
     addTaskForm.style.display = 'none';
+
+      const tag = document.createElement('p');
+      tag.textContent = 'Add a task';
+      tag.id = 'add-task-tag'
 
       const titleInput = document.createElement('input');
       titleInput.id = 'task-title-input';
@@ -133,27 +130,26 @@ export const userInterface = (() => {
       const addTaskActions = document.createElement('div')
       
         const addTaskAdd = document.createElement('button');
-        // addTaskAdd.type = 'submit';
         addTaskAdd.id = 'add-task-add'
         addTaskAdd.textContent = 'Add';
 
-        const addTaskCancel = document.createElement('button');
-        addTaskCancel.id = 'add-task-cancel'
-        addTaskCancel.textContent = 'Cancel';
 
         const deteleTask = document.createElement('button');
         deteleTask.id = 'delete-task-button';
         deteleTask.textContent = 'Delete';
+        deteleTask.style.display = 'none';
 
-        editElmnt.appendChildren(addTaskActions, [addTaskAdd, addTaskCancel, deteleTask]);
+        console.log(addTaskAdd)
+
+        editElmnt.appendChildren(addTaskActions, [addTaskAdd, deteleTask]);
       
         const warning = document.createElement('p');
         warning.id = 'input-warning';
 
-      editElmnt.appendChildren(addTaskForm, [titleInput, descInput, dueDateInput, dueTimeInput, priorityInput, addTaskActions, warning]);
+      editElmnt.appendChildren(addTaskForm, [tag, titleInput, descInput, dueDateInput, dueTimeInput, priorityInput, addTaskActions, warning]);
 
-      projectDisp.appendChild(taskDisplay);
-  editElmnt.appendChildren(projBench, [projName, projectDisp, addTaskBtn, addTaskForm]);
+      editElmnt.appendChildren(projectDisp, [taskDisplay, addTaskForm])
+  editElmnt.appendChildren(projBench, [projName, projectDisp]);
   
   
 

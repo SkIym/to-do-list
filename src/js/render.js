@@ -13,7 +13,7 @@ class taskRenderer {
     this.desc = domElmnt.addDesc;
     this.prio = domElmnt.addPrio;
     this.edit = domElmnt.addTaskAdd;
-    this.cancel = domElmnt.addTaskCancel;
+    this.tag = domElmnt.taskTag;
     this.delete = domElmnt.deleteTaskBtn;
     this.warning = domElmnt.inputWarning;
   }
@@ -48,7 +48,6 @@ class projectRenderer {
     this.name = document.getElementById('project-name');
     this.project = null;
     this.taskDisplay = domElmnt.taskDisplay;
-    this.addTaskBtn = domElmnt.addTaskBtn;
     this.completeBtns = domElmnt.completeButtons();
     this.editBtns = domElmnt.editButtons();
   }

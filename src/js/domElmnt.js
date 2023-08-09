@@ -4,6 +4,7 @@ export const addProjectField = document.getElementById('add-project-input');
 export const addProjectAdd = document.getElementById('add-project-button');
 export const addProjectCancel = document.getElementById('cancel-add-project-button');
 
+console.log(addProjectBtn)
 
 export function projectItems() {
   return document.querySelectorAll('.project-item');
@@ -19,10 +20,11 @@ export function completeButtons() {
 
 export const taskDisplay = document.getElementById('task-display');
 
-export const addTaskBtn = document.getElementById('add-task');
+// export const addTaskBtn = document.getElementById('add-task');
 export const addTaskForm = document.getElementById('add-task-form');
 export const addTaskAdd = document.getElementById('add-task-add');
-export const addTaskCancel = document.getElementById('add-task-cancel');
+// export const addTaskCancel = document.getElementById('add-task-cancel');
+export const taskTag = document.getElementById('add-task-tag')
 
 export const addTitle = document.getElementById('task-title-input');
 export const addDesc = document.getElementById('task-desc-input');
