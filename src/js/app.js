@@ -1,10 +1,11 @@
 // control app flow and events
-import { listRenderer, projectRendererInstance, taskRendererInstance } from "./render";
-import Project from "./projects";
-import Task from "./tasks";
+import ListRenderer from './listRenderer';
+import projectRendererInstance from './projectRenderer';
+import taskRendererInstance from './taskRenderer';
+import Project from './projects';
+import Task from './tasks';
 import TodoList from './list';
-import editElmnt from "./editElmnt";
-
+import editElmnt from './editElmnt';
 
 export default class App {
   constructor() {
@@ -17,7 +18,7 @@ export default class App {
     this.addEventsStatic();
   }
 
-  // load storage 
+  // load storage
 
   saveToLocalStorage() {
     localStorage.setItem('todolist', JSON.stringify(this.list));
@@ -25,21 +26,18 @@ export default class App {
 
   loadFromLocalStorage() {
     const storedData = localStorage.getItem('todolist');
-    console.log(JSON.parse(storedData))
     if (storedData) {
       this.list = TodoList.fromStorage(JSON.parse(storedData));
-    }
-    else {
+    } else {
       this.list = new TodoList();
       this.list.addProject(new Project('Home'));
       this.list.addProject(new Project('School'));
     }
-    this.listRenderer = new listRenderer(this.list);
+    this.listRenderer = new ListRenderer(this.list);
   }
 
   // add event listeners to static buttons
   addEventsStatic() {
-    
     // user wants to add a project
     this.listRenderer.addProjectBtn.addEventListener('click', () => {
       this.refreshList();
@@ -52,10 +50,10 @@ export default class App {
     });
 
     // user adds a project
-   this.listRenderer.addProjectAdd.addEventListener('click', () => {
-      let projectName = this.listRenderer.addProjField.value;
-      if(projectName) {
-        this.list.addProject(new Project(`${projectName}`))
+    this.listRenderer.addProjectAdd.addEventListener('click', () => {
+      const projectName = this.listRenderer.addProjField.value;
+      if (projectName) {
+        this.list.addProject(new Project(`${projectName}`));
         this.refreshList();
         this.saveToLocalStorage();
       }
@@ -68,35 +66,30 @@ export default class App {
       this.taskRenderer.hideWarning();
 
       // Collect form values
-      let title = this.taskRenderer.title.value;
-      let desc = this.taskRenderer.desc.value;
-      let date = this.taskRenderer.dueDate.value;
-      let prio = parseInt(this.taskRenderer.prio.value);
-      let time = this.taskRenderer.dueTime.value;
+      const title = this.taskRenderer.title.value;
+      const desc = this.taskRenderer.desc.value;
+      const date = this.taskRenderer.dueDate.value;
+      const prio = parseInt(this.taskRenderer.prio.value, 10);
+      const time = this.taskRenderer.dueTime.value;
 
       if (date && title) {
         // form was reached through 'Add new Task'
         if (!currentTask) {
-          currentProject.addTask(new Task(title, desc, date, time, prio))
-        }
-
-        // form was reached through the 'Edit' buttons
-        else {
+          currentProject.addTask(new Task(title, desc, date, time, prio));
+        } else {
           currentTask.title = title;
           currentTask.description = desc;
           currentTask.dueDate = date;
           currentTask.dueTime = time;
           currentTask.priority = prio;
         }
-        this.refreshProject(currentProject); 
+        this.refreshProject(currentProject);
         this.taskAddMode();
         this.taskRenderer.task = null;
-      }
-      else {
+      } else {
         this.taskRenderer.showWarning();
       }
     });
-
 
     // user deletes a task
     this.taskRenderer.delete.addEventListener('click', () => {
@@ -116,19 +109,19 @@ export default class App {
       item.addEventListener('click', () => {
         this.refreshProject(this.list.getProject(item.id));
         this.loadProjectDisplay();
-      })
+      });
     });
   }
 
   updateTasks() {
-    // user completes a task 
+    // user completes a task
     this.projectRenderer.completeBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const currentProject = this.projectRenderer.project;
         currentProject.removeTask(currentProject.getTask(btn.id));
         this.refreshProject(currentProject);
         this.taskAddMode();
-      })
+      });
     });
     // user wamts to edit a task
 
@@ -138,7 +131,7 @@ export default class App {
         const currentTask = currentProject.getTask(btn.id);
         this.taskRenderer.renderDetails(currentTask, currentProject);
         this.taskEditMode();
-      })
+      });
     });
   }
 
@@ -157,7 +150,6 @@ export default class App {
 
   // Refresh project view
   refreshProject(project) {
-    console.log(project)
     this.projectRenderer.renderTasks(project);
     this.updateTasks();
     this.refreshTaskForm();
@@ -203,5 +195,3 @@ export default class App {
     this.refreshTaskForm();
   }
 }
-
-

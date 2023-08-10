@@ -1,7 +1,6 @@
 // todo-items
 import { format } from 'date-fns';
 
-
 export default class Task {
   constructor(title, description, dueDate, dueTime, priority) {
     this._title = title;
@@ -27,17 +26,16 @@ export default class Task {
     this._description = description;
   }
 
-
   get dueDate() {
     return this._dueDate;
   }
 
-  formattedDueDate() {
-    return format(new Date(this._dueDate), 'MMM dd');
-  }
-
   set dueDate(date) {
     this._dueDate = date;
+  }
+
+  formattedDueDate() {
+    return format(new Date(this._dueDate), 'MMM dd');
   }
 
   get dueTime() {
@@ -57,7 +55,7 @@ export default class Task {
   }
 
   static fromStorage(taskData) {
-    console.log(taskData._priority);
+    // eslint-disable-next-line max-len
     const task = new Task(taskData._title, taskData._description, taskData._dueDate, taskData._dueTime, taskData._priority);
     return task;
   }

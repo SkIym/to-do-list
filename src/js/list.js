@@ -1,5 +1,5 @@
 // List of projects
-import Project from "./projects";
+import Project from './projects';
 
 export default class TodoList {
   constructor() {
@@ -11,11 +11,11 @@ export default class TodoList {
   }
 
   set projects(projects) {
-    this._projects = projects
+    this._projects = projects;
   }
 
   getProject(id) {
-    return this._projects[id]
+    return this._projects[id];
   }
 
   addProject(project) {
@@ -23,15 +23,12 @@ export default class TodoList {
   }
 
   removeProject(rm) {
-    this._projects = this._projects.filter((project) => {
-      return project !== rm;
-     })
+    this._projects = this._projects.filter((project) => project !== rm);
   }
 
   static fromStorage(listData) {
     const list = new TodoList();
-    list.projects = listData._projects.map(projectData => Project.fromStorage(projectData));
+    list.projects = listData._projects.map((projectData) => Project.fromStorage(projectData));
     return list;
   }
-
 }
