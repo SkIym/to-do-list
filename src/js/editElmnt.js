@@ -20,20 +20,20 @@ export default class editElmnt {
   };
 
   static toggleToFlex(element) {
-    element.style.display = (element.style.display === 'none') ? 'flex' : 'none';
+    element.style.display = element.style.display === "none" ? "flex" : "none";
   }
 
   static toggleToBlock(element) {
-    element.style.display = (element.style.display === 'none') ? 'block' : 'none';
+    element.style.display = element.style.display === "none" ? "block" : "none";
   }
 
   static colorAccdgToPrio(prio, element) {
     if (prio === 1) {
-      element.classList.add('low-prio');
+      element.classList.add("low-prio");
     } else if (prio === 2) {
-      element.classList.add('mid-prio');
+      element.classList.add("mid-prio");
     } else {
-      element.classList.add('high-prio');
+      element.classList.add("high-prio");
     }
   }
 }

@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 // Projects (group of tasks)
 
-import Task from './tasks';
+import Task from "./tasks";
 
 export default class Project {
   constructor(name) {
@@ -40,7 +40,9 @@ export default class Project {
   static fromStorage(projectData) {
     const proj = new Project();
     proj.name = projectData._name;
-    proj.tasks = projectData._tasks.map((taskData) => Task.fromStorage(taskData));
+    proj.tasks = projectData._tasks.map((taskData) =>
+      Task.fromStorage(taskData),
+    );
     return proj;
   }
 }

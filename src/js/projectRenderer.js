@@ -1,10 +1,10 @@
-import editElmnt from './editElmnt';
-import * as domElmnt from './domElmnt';
+import editElmnt from "./editElmnt";
+import * as domElmnt from "./domElmnt";
 
 class ProjectRenderer {
   constructor() {
-    this.tdItems = document.getElementById('task-items');
-    this.name = document.getElementById('project-name');
+    this.tdItems = document.getElementById("task-items");
+    this.name = document.getElementById("project-name");
     this.project = null;
     this.taskDisplay = domElmnt.taskDisplay;
     this.completeBtns = domElmnt.completeButtons();
@@ -14,14 +14,14 @@ class ProjectRenderer {
   renderTasks(currentProject) {
     // Update rendered project
     this.project = currentProject;
-    this.tdItems.innerHTML = '';
+    this.tdItems.innerHTML = "";
     editElmnt.addText(this.name, currentProject.name);
 
     let taskId = 0;
 
     currentProject.tasks.forEach((task) => {
-      const taskItem = document.createElement('div');
-      taskItem.classList.add('task-item');
+      const taskItem = document.createElement("div");
+      taskItem.classList.add("task-item");
       taskItem.innerHTML = `
         <div class='task-info'> 
           <p>${task.title} - </p>
@@ -30,18 +30,18 @@ class ProjectRenderer {
       `;
 
       // Append an edit button
-      const taskBtns = document.createElement('div');
-      taskBtns.id = 'task-action-buttons';
+      const taskBtns = document.createElement("div");
+      taskBtns.id = "task-action-buttons";
 
-      const editTaskBtn = document.createElement('button');
-      editTaskBtn.textContent = 'Edit';
+      const editTaskBtn = document.createElement("button");
+      editTaskBtn.textContent = "Edit";
       editTaskBtn.id = `${taskId}`;
-      editElmnt.addClass(editTaskBtn, ['task-action', 'edit-task']);
+      editElmnt.addClass(editTaskBtn, ["task-action", "edit-task"]);
       // Append a complete button
-      const checkTaskBtn = document.createElement('button');
-      checkTaskBtn.textContent = 'Complete';
+      const checkTaskBtn = document.createElement("button");
+      checkTaskBtn.textContent = "Complete";
       checkTaskBtn.id = `${taskId}`;
-      editElmnt.addClass(checkTaskBtn, ['task-action', 'check-task']);
+      editElmnt.addClass(checkTaskBtn, ["task-action", "check-task"]);
 
       editElmnt.appendChildren(taskBtns, [editTaskBtn, checkTaskBtn]);
       taskItem.appendChild(taskBtns);

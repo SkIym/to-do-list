@@ -1,10 +1,10 @@
-import editElmnt from './editElmnt';
-import * as domElmnt from './domElmnt';
+import editElmnt from "./editElmnt";
+import * as domElmnt from "./domElmnt";
 
 export default class ListRenderer {
   constructor(list) {
     this.list = list;
-    this.pdItems = document.getElementById('project-items');
+    this.pdItems = document.getElementById("project-items");
     this.addProjField = domElmnt.addProjectField;
     this.addProjectForm = domElmnt.addProjectForm;
     this.addProjectBtn = domElmnt.addProjectBtn;
@@ -14,12 +14,12 @@ export default class ListRenderer {
   }
 
   renderProjects() {
-    this.pdItems.innerHTML = '';
+    this.pdItems.innerHTML = "";
     let projectId = 0;
 
     this.list.projects.forEach((proj) => {
-      const projItem = document.createElement('div');
-      projItem.classList.add('project-item');
+      const projItem = document.createElement("div");
+      projItem.classList.add("project-item");
       projItem.textContent = `${proj.name}`;
       editElmnt.appendChildren(this.pdItems, [projItem]);
       projItem.id = `${projectId}`;

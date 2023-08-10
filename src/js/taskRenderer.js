@@ -1,4 +1,4 @@
-import * as domElmnt from './domElmnt';
+import * as domElmnt from "./domElmnt";
 
 class TaskRenderer {
   constructor() {
@@ -19,8 +19,8 @@ class TaskRenderer {
   renderDetails(currentTask, currentProject) {
     this.task = currentTask;
     this.project = currentProject;
-    this.warning.textContent = '';
-    this.details.style.display = 'flex';
+    this.warning.textContent = "";
+    this.details.style.display = "flex";
     this.title.value = `${this.task.title}`;
     this.dueTime.value = `${this.task.dueTime}`;
     this.desc.value = `${this.task.description}`;
@@ -29,11 +29,11 @@ class TaskRenderer {
   }
 
   showWarning() {
-    this.warning.textContent = 'Please input task title and due date';
+    this.warning.textContent = "Please input task title and due date";
   }
 
   hideWarning() {
-    this.warning.textContent = '';
+    this.warning.textContent = "";
   }
 }
 
